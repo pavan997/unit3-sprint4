@@ -132,7 +132,7 @@ app.get("/gender",async(req,res)=>{
         .send(gen);
     }
     catch (err) {
-        return res.status(200)
+        return res.status(400)
         .send(err.message);
     }
 })

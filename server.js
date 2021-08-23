@@ -26,7 +26,7 @@ const pdSchema = new mongoose.Schema({
     }],
     genderId:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"color",
+        ref:"gender",
         require:true,
     }]
 },{
@@ -79,7 +79,7 @@ app.get("/product",async(req,res)=>{
         .send(product);
     }
     catch (err) {
-        return res.status(200)
+        return res.status(400)
         .send(err.message);
     }
 })
@@ -106,7 +106,7 @@ app.get("/color",async(req,res)=>{
         .send(clrs);
     }
     catch (err) {
-        return res.status(200)
+        return res.status(400)
         .send(err.message);
     }
 })
@@ -134,6 +134,17 @@ app.get("/gender",async(req,res)=>{
     catch (err) {
         return res.status(400)
         .send(err.message);
+    }
+})
+
+//q1 greater than .5k
+app.get("/costlyprod", async(req,res)=>{
+    try{
+        const above500 = await Product.find({"price":{$gt:500}}).lean().exec();
+        return res.status(200).send(above500);
+    }
+    catch(err){
+        return res.status(404).send(err.message);
     }
 })
 

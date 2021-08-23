@@ -43,7 +43,7 @@ const colorSchema = new mongoose.Schema({
     versionKey: false,
 });
 
-const color = mongoose.model("color",colorSchema)
+const Color = mongoose.model("color",colorSchema)
 
 //..gender schema
 
@@ -59,11 +59,82 @@ const Gender = mongoose.model('gender',genderSchema);
 
 ///crud operations starting below
 
-app.post("/",async(req,res)=>{
+app.post("/product",async(req,res)=>{
     try{
-        const pro = await 
+        const prod = await Product.create(req.body);
+        return res
+        .status(201)
+        .send(prod) 
+    }
+    catch(err){
+        return res.status(404).send(err.message);
     }
 
+});
+app.get("/product",async(req,res)=>{
+    try{
+        const product = await Product.find().lean().exec();
+        return res
+        .status(201)
+        .send(product);
+    }
+    catch (err) {
+        return res.status(200)
+        .send(err.message);
+    }
+})
+
+
+
+app.post("/color",async(req,res)=>{
+    try{
+        const clrs = await Color.create(req.body);
+        return res
+        .status(201)
+        .send(clrs) 
+    }
+    catch(err){
+        return res.status(404).send(err.message);
+    }
+
+});
+app.get("/color",async(req,res)=>{
+    try{
+        const clrs = await Color.find().lean().exec();
+        return res
+        .status(201)
+        .send(clrs);
+    }
+    catch (err) {
+        return res.status(200)
+        .send(err.message);
+    }
+})
+
+
+app.post("/gender",async(req,res)=>{
+    try{
+        const gen = await Gender.create(req.body);
+        return res
+        .status(201)
+        .send(gen) 
+    }
+    catch(err){
+        return res.status(404).send(err.message);
+    }
+
+});
+app.get("/gender",async(req,res)=>{
+    try{
+        const gen = await Gender.find().lean().exec();
+        return res
+        .status(201)
+        .send(gen);
+    }
+    catch (err) {
+        return res.status(200)
+        .send(err.message);
+    }
 })
 
 

@@ -150,7 +150,16 @@ app.get("/costlyprod", async(req,res)=>{
 
 
 
-
+//men and women question
+app.get("/mandw", async(req,res)=>{
+    try{
+        const menandwmen = await Product.find({$and:[{"genderId":{$eq:"61237c2b4d9ed82894d55fc0"}},{"genderId":  {$eq:"61237c2b4d9ed82894d55fc1"}}]}).lean().exec();
+        return res.status(200).send(menandwmen);
+    }
+    catch(err){
+        return res.status(404).send(err.message);
+    }
+})
 
 
 
